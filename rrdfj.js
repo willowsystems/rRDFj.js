@@ -89,13 +89,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 			} else if (_.isArray(filterobj)){
 				callback = function(values, object_id){
 					// var data = this
-					return _.indexOf(filterobj, object_id) > -1 // found = true, not = false
+					return _.indexOf(filterobj, object_id) !== -1 // found = true, not = false
 				}
 			} else if (typeof filterobj === 'object'){
-				var wewantthese = _.keys(filterobj).sort()
+				var wewantthese = _.keys(filterobj.data != null? filterobj.data : filterobj).sort()
 				callback = function(values, object_id){
 					// var data = this
-					return _.indexOf(wewantthese, object_id, true) > -1 // found = true, not = false
+					return _.indexOf(wewantthese, object_id, true) !== -1 // found = true, not = false
 				}
 			} else {
 				// we don't know what filterobj is, let's try brute force:

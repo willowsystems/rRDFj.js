@@ -105,7 +105,11 @@ test('single - value absent', function(){
 
 if ( typeof define === "function" && define.amd != null) {
     // AMD-loader compatible resource declaration
-    define(['jquery', 'underscore', 'rrdfj', 'testdata'], function($, _, rRDFj, testdata){return testrunner($, _, rRDFj, testdata) } )
+    define(function(){
+        return new function(){
+            this.Run = testrunner
+        }
+    } )
 } else {
     // global-polluting outcome.
     var undef

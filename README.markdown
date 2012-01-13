@@ -119,13 +119,18 @@ See tests for more examples.
 
 ## Adding rRDFj.js to your page
 
+Since this library builds upon Underscore.js, you need to expose rRDFj to Underscore.js
+
 The library can be pulled into the page as regular script:
 
+	<script src="path/to/underscore.js"></script>
 	<script src="path/to/rrdfj.js"></script>
 
 
 Or as AMD-compatible module:
 
+    // rRDFj internally require( ['underscore']
+    // make sure you have set the path to 'underscore' in your config or defined it as such ahead of time.
     require(['rrdfj'], function(rRDFj){
         var d = rRDFj(mydataobject)
         ...

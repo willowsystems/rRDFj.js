@@ -131,15 +131,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 		}
 
 		, rRDFjObj = function(data){
-			var me = this
-			, classconstructor = this.constructor
-			
 			this.data = data
-			this.filter = function(filterobj){ return new classconstructor(rRDFjResultSetObjectFilterMethod.call(me.data, filterobj)) }
-			this.each = function(callback){ rRDFjResultSetObjectForEachMethod.call(me.data, callback); return me }
-			this.single = function(defaultValue){ return rRDFjResultSetObjectSingleMethod.call(me.data, defaultValue)}
-			this.valuesfor = function(predicate){ return rRDFjResultSetObjectGetValueForMethod.call(me.data, predicate)} 
-			this.map = function(callback){ return rRDFjResultSetObjectMapMethod.call(me.data, callback)} 
+			this.filter = function(filterobj){ return new this.constructor(rRDFjResultSetObjectFilterMethod.call(this.data, filterobj)) }
+			this.each = function(callback){ rRDFjResultSetObjectForEachMethod.call(this.data, callback); return this }
+			this.single = function(defaultValue){ return rRDFjResultSetObjectSingleMethod.call(this.data, defaultValue)}
+			this.valuesfor = function(predicate){ return rRDFjResultSetObjectGetValueForMethod.call(this.data, predicate)}
+			this.map = function(callback){ return rRDFjResultSetObjectMapMethod.call(this.data, callback)} 
 		}
 		
 		return function(data){return new rRDFjObj(data)}

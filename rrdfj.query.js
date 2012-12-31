@@ -1,6 +1,6 @@
 // .ValueFor(PredicateName, DefaultValue) method.
 // Always returns an array distinct values from all objects, even when no predicate
-// and no items in rRDFj object collection.. 
+// and no items in rRDFj object collection..
 // DefaultValue can be an array of any shape, or anything really. Null will work.
 // DefaultValue is returned back BY REFERENCE, not a copy.
 // Will pass that through in only one case: No object in collection has that Predicate
@@ -11,13 +11,13 @@ var rRDFjResultSetObjectGetValueForMethod = function(PredicateName, DefaultValue
 	var data = this
 	, answer = []
 	, tmp
-	// get array of values 
+	// get array of values
 	// flatten, distinct
 	_.each(
 		data
 		, function(value, id){
 			tmp = this[id][PredicateName]
-			
+
 			if (tmp !== null) {
 				answer.push(tmp)
 			}
@@ -35,7 +35,7 @@ var rRDFjResultSetObjectGetValueForMethod = function(PredicateName, DefaultValue
 // 'this' within the callback is the triples data Object
 // Example callback:
 //   function(prop_vals_obj, ID, list){var data = this; prop_vals_obj.newproperty = 'newvalue'})
-// always return reference to 'this' to allow chaining 
+// always return reference to 'this' to allow chaining
 var rRDFjResultSetObjectForEachMethod = function(callback){
 	var data = this
 	_.each(data, callback, data)
@@ -43,8 +43,8 @@ var rRDFjResultSetObjectForEachMethod = function(callback){
 }
 
 // .Map() Method
-// Allows one to extract data from triple-set to array of custom values 
-// Takes in forEach-compatible 
+// Allows one to extract data from triple-set to array of custom values
+// Takes in forEach-compatible
 var rRDFjResultSetObjectMapMethod = function(callback){
 	var data = this
 	return _.map(data, callback, data)
@@ -52,9 +52,9 @@ var rRDFjResultSetObjectMapMethod = function(callback){
 
 // returns result set object with subset of triples matching the filter criteria
 // described in the filterobj, which can be (a) list of IDs, (b) single id (String), (c) Object
-// containing a set of triples, or (d) function returning truthy answer for elements to 
-// be chosen for inclusion in the resultset (format is similar to 
-// Object is treated like an array: Keys are extracted and become filter list. 
+// containing a set of triples, or (d) function returning truthy answer for elements to
+// be chosen for inclusion in the resultset (format is similar to
+// Object is treated like an array: Keys are extracted and become filter list.
 // This is useful for extracting an intersection of two datasets.
 // filterobj in function form is compatible with JavaScript's forEach callback
 // function(predicate_collection_object, object_id, object_id_list){
@@ -64,10 +64,10 @@ var rRDFjResultSetObjectMapMethod = function(callback){
 // }
 // In case of list, or single string - we treat those as IDs and pull the objects with those IDs
 var rRDFjResultSetObjectFilterMethod = function(filterobj){
-	var data = this 
+	var data = this
 	, output = {}
 	, callback
-	
+
 	if(filterobj == null){
 		return output
 	} else if (typeof filterobj === 'function'){
@@ -105,7 +105,7 @@ var rRDFjResultSetObjectFilterMethod = function(filterobj){
 // .Single() method.
 var rRDFjResultSetObjectSingleMethod = function(defaultObject){
 	var keys = _.keys(this)
-		// data = this 
+		// data = this
 	if (keys.length === 0){
 		return (defaultObject == null)? {} : defaultObject
 	} else {
@@ -114,7 +114,7 @@ var rRDFjResultSetObjectSingleMethod = function(defaultObject){
 }
 
 API.filter = function(filterobj){ return new this.constructor(rRDFjResultSetObjectFilterMethod.call(this.data, filterobj)) }
-API.each = function(callback){ rRDFjResultSetObjectForEachMethod.call(this.data, callback); return this }
+API.each = API.forEach = function(callback){ rRDFjResultSetObjectForEachMethod.call(this.data, callback); return this }
 API.single = function(defaultValue){ return rRDFjResultSetObjectSingleMethod.call(this.data, defaultValue)}
 API.valuesfor = function(predicate){ return rRDFjResultSetObjectGetValueForMethod.call(this.data, predicate)}
 API.map = function(callback){ return rRDFjResultSetObjectMapMethod.call(this.data, callback)}
